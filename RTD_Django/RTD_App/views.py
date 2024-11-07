@@ -1,5 +1,5 @@
 from django.shortcuts import render
-
+from .forms import FormularioForm
 from django.shortcuts import render
 from .models import Producto
 from django.db.models import Sum, Max
@@ -15,3 +15,13 @@ def catalogo(request):
     }
     
     return render (request, 'catalogo.html', data)
+
+def formulario(request):
+    if request.method == 'POST':
+        form = FormularioForm(request.POST)
+        if form.is_valid():
+            form.save() 
+    else:
+        form = FormularioForm()
+
+    return render(request, 'formulario.html', {'form': form})
